@@ -4,17 +4,20 @@ import Project from './views/Project';
 import User from './views/User';
 import Home from './views/Home';
 import Header from './components/Header';
+import { Container } from '@mui/material';
 
 function App() {
   return (
     <div className="App">
       <Header />
-      <Routes>
-        <Route exact path="/" element={<Home/>} />
-        <Route path="/project" element={<Project/>} />
-        <Route exact path="/user" element={<User/>} />
-        <Route path="*" element={<Navigate to="/"/>} />
-      </Routes>
+      <Container maxWidth="xl" sx={{ my: 3 }}>
+        <Routes>
+          <Route exact path="/" element={<Home/>} />
+          <Route path="/project" element={<Project/>} />
+          <Route exact path="/user" element={<User/>} />
+          <Route path="*" element={<Navigate to="/"/>} />
+        </Routes>
+      </Container>
     </div>
   );
 }

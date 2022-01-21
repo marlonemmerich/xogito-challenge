@@ -2,11 +2,13 @@ import React from 'react'
 import User from '../models/User'
 import { connect } from 'react-redux'
 import { insertUser } from '../store/actions/user'
+import { useNavigate } from "react-router-dom";
 
 import { TextField, Button, Container, Grid } from '@mui/material';
 
 const UserView = props => {
     const { users } = props
+    const navigate = useNavigate();
 
     let [name, setName] = React.useState('');
     let [email, setEmail] = React.useState('');
@@ -46,6 +48,7 @@ const UserView = props => {
         user.email = email;
 
         props.callInsertUser(user)
+        navigate('/');
     }
 
     return (

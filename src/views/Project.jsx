@@ -3,9 +3,10 @@ import { TextField, Button, Container, Grid, Select, MenuItem, InputLabel } from
 import { connect } from 'react-redux'
 import Project from './../models/Project'
 import { insertProject, editProject } from '../store/actions/project'
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 const ProjectView = (props) => {
+    const navigate = useNavigate();
 
     let [name, setName] = React.useState('');
     let [description, setDescription] = React.useState('');
@@ -59,6 +60,8 @@ const ProjectView = (props) => {
         }
 
         props.callInsertProject(project)
+
+        navigate('/');
     };
 
     return (

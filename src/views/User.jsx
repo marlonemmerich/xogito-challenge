@@ -53,7 +53,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         callInsertUser(newUser) {
-            console.log('user', newUser)
             const action = insertUser(newUser)
             dispatch(action)
         }

@@ -2,7 +2,7 @@ import User from './User'
 
 class Project {
     constructor(project={}) {
-        this.id = '';
+        this.id = 0;
         this.name = '';
         this.description = '';
         this.owner = new User();

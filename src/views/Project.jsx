@@ -3,68 +3,122 @@ import { TextField, Button, Container, Grid, Select, MenuItem, InputLabel } from
 import { connect } from 'react-redux'
 import Project from './../models/Project'
 import { insertProject, editProject } from '../store/actions/project'
+import { useParams } from "react-router-dom";
 
 const ProjectView = (props) => {
 
+    let [name, setName] = React.useState('');
+    let [description, setDescription] = React.useState('');
+    let [userId, setUserId] = React.useState(0);
+
     const { users, projects } = props
 
-    function insertProject() {
-        console.log('users and project', users, projects)
-        const project = new Project({
-            id: 20,
-            name: 'Project 20',
-            description: 'description',
+    let { id } = useParams();
+
+    if(id && !userId) {
+        let project = props.projects.filter((proj) => (
+            proj.id == id
+        ))
+        console.log('project', project);
+
+        if(project.length) {
+            setName(project[0].name)
+            setDescription(project[0].description)
+            setUserId(project[0].id)
+        }
+    }
+
+    function formIsValid() {
+        return !!name && !!description && !!userId;
+    }
+
+    const handleChangeName = (event) => {
+        setName(event.target.value);
+    };
+
+    const handleChangeDescription = (event) => {
+        setDescription(event.target.value);
+    };
+
+    const handleChangeUser = (event) => {
+        console.log('handle', event.target.value)
+        setUserId(event.target.value);
+    };
+
+    function submitForm() {
+        let project = new Project({
+            name: name,
+            description: description,
             user: {
-                id: 1
-            }
+                id: userId
+            },
         })
+        if(id) {
+            project.id = id;
+            props.callEditProject(project)
+            return;
+        }
+
         props.callInsertProject(project)
     };
 
-    const project = new Project();
-
     return (
         <Container>
-            {project.owner.id}
+            {id}
             <Grid container direction="row" justifyContent="center" alignItems="center">
                 <form>
-                    <TextField
-                        type="text"
-                        label="ID"
-                        variant="outlined"
-                        sx={{ my: 2 }}
-                        disabled
-                    />
+                    {
+                        !id ?
+                        <h1>Creating Project</h1>
+                        :
+                        <span>
+                            <h1>Editing Project</h1>
+                            <TextField
+                                type="text"
+                                label={id}
+                                variant="outlined"
+                                sx={{ my: 2 }}
+                                disabled
+                            />
+                        </span>
+                    }
+
                     <br />
                     <TextField
                         type="text"
                         label="Name"
                         variant="outlined"
+                        value={name}
                         sx={{ pb: 1 }}
+                        onChange={handleChangeName}
                     />
                     <br />
                     <TextField
                         type="text"
+                        value={description}
                         label="Description"
                         variant="outlined"
                         sx={{ my: 1 }}
+                        onChange={handleChangeDescription}
                     />
                     <br />
                     <InputLabel id="user-name">User</InputLabel>
                     <Select
                         labelId="user-name"
                         id="demo-simple-select"
-                        value={project.owner.id}
+                        value={userId}
                         label="Age"
+                        onChange={handleChangeUser}
                     >
                         <MenuItem value='0'>Please, select owner</MenuItem>
-                        <MenuItem value='1'>User 1</MenuItem>
-                        <MenuItem value='2'>User 2</MenuItem>
-                        <MenuItem value='3'>User 3</MenuItem>
+                        {users.map( (user) => (
+                            <MenuItem key={user.id} value={user.id}>{user.name}</MenuItem>
+                        ))}
+
                     </Select>
                     <br />
                     <br />
-                    <Button variant="contained" color="primary" onClick={() => insertProject()}>
+                    <Button variant="contained" disabled={!formIsValid()} color="primary" onClick={() => submitForm()}>
                         Save Project
                     </Button>
                 </form>

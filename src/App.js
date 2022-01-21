@@ -13,8 +13,8 @@ function App() {
       <Container maxWidth="xl" sx={{ my: 3 }}>
         <Routes>
           <Route exact path="/" element={<Home/>} />
-          <Route exact path="/project/" element={<Project/>} />
           <Route exact path="/project/:id" element={<Project/>} />
+          <Route exact path="/project/" element={<Project/>} />
           <Route exact path="/user" element={<User/>} />
           <Route path="*" element={<Navigate to="/"/>} />
         </Routes>

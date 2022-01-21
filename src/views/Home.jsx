@@ -2,26 +2,9 @@ import React from 'react'
 import { TextField, Container, Grid, Button, Table, Paper, TableHead, TableRow, TableCell, TableBody, TableContainer } from '@mui/material';
 import { Link } from 'react-router-dom'
 import EditIcon from '@mui/icons-material/Edit';
+import { connect } from 'react-redux'
 
-const projects = [
-    {
-        id: 1,
-        name: 'Project 1',
-        description: 'Description 1',
-    },
-    {
-        id: 2,
-        name: 'Project 2',
-        description: 'Description 2',
-    },
-    {
-        id: 3,
-        name: 'Project 3',
-        description: 'Description 3',
-    }
-];
-
-const Home = () => (
+const HomeComponent = (props) => (
     <Container>
         <Container>
             <Grid container direction="row" justifyContent="center" alignItems="center" >
@@ -59,21 +42,21 @@ const Home = () => (
                 </TableRow>
                 </TableHead>
                 <TableBody>
-                {projects.map((project) => (
+                {props.projects.map((project) => (
                     <TableRow
-                    key={project.name}
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                        key={project.id}
+                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                     >
-                    <TableCell component="th" scope="row">
-                        {project.id}
-                    </TableCell>
-                    <TableCell>{project.name}</TableCell>
-                    <TableCell>{project.description}</TableCell>
-                    <TableCell>
-                        <Link to={`/project/${project.id}`}>
-                            <EditIcon />
-                        </Link>
-                    </TableCell>
+                        <TableCell component="th" scope="row">
+                            {project.id}
+                        </TableCell>
+                        <TableCell>{project.name}</TableCell>
+                        <TableCell>{project.description}</TableCell>
+                        <TableCell>
+                            <Link to={`/project/${project.id}`}>
+                                <EditIcon />
+                            </Link>
+                        </TableCell>
                     </TableRow>
                 ))}
                 </TableBody>
@@ -85,4 +68,11 @@ const Home = () => (
 
 )
 
-export default Home
+const mapStateToProps = state => {
+    return  {
+        users: state.users,
+        projects: state.projects
+    }
+};
+
+export default connect(mapStateToProps)(HomeComponent)

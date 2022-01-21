@@ -1,18 +1,31 @@
 import React from 'react'
 import { TextField, Button, Container, Grid, Select, MenuItem, InputLabel } from '@mui/material';
+import { connect } from 'react-redux'
+import Project from './../models/Project'
+import { insertProject, editProject } from '../store/actions/project'
 
+const ProjectView = (props) => {
 
+    const { users, projects } = props
 
-const Project = () => {
-
-    const [user, setUser] = React.useState('');
-
-    const handleChange = (event) => {
-        setUser(event.target.value);
+    function insertProject() {
+        console.log('users and project', users, projects)
+        const project = new Project({
+            id: 20,
+            name: 'Project 20',
+            description: 'description',
+            user: {
+                id: 1
+            }
+        })
+        props.callInsertProject(project)
     };
+
+    const project = new Project();
 
     return (
         <Container>
+            {project.owner.id}
             <Grid container direction="row" justifyContent="center" alignItems="center">
                 <form>
                     <TextField
@@ -41,17 +54,17 @@ const Project = () => {
                     <Select
                         labelId="user-name"
                         id="demo-simple-select"
-                        value={user}
+                        value={project.owner.id}
                         label="Age"
-                        onChange={handleChange}
                     >
-                        <MenuItem value={1}>User 1</MenuItem>
-                        <MenuItem value={2}>User 2</MenuItem>
-                        <MenuItem value={3}>User 3</MenuItem>
+                        <MenuItem value='0'>Please, select owner</MenuItem>
+                        <MenuItem value='1'>User 1</MenuItem>
+                        <MenuItem value='2'>User 2</MenuItem>
+                        <MenuItem value='3'>User 3</MenuItem>
                     </Select>
                     <br />
                     <br />
-                    <Button variant="contained" color="primary">
+                    <Button variant="contained" color="primary" onClick={() => insertProject()}>
                         Save Project
                     </Button>
                 </form>
@@ -60,4 +73,24 @@ const Project = () => {
     )
 }
 
-export default Project
+const mapStateToProps = state => {
+    return  {
+        users: state.users,
+        projects: state.projects
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        callInsertProject(newProject) {
+            const action = insertProject(newProject)
+            dispatch(action)
+        },
+        callEditProject(project) {
+            const action = editProject(project)
+            dispatch(action)
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProjectView)

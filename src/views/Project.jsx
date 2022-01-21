@@ -19,12 +19,12 @@ const ProjectView = (props) => {
         let project = props.projects.filter((proj) => (
             proj.id == id
         ))
-        console.log('project', project);
 
         if(project.length) {
             setName(project[0].name)
             setDescription(project[0].description)
-            setUserId(project[0].id)
+            console.log('project[0].user', project[0].owner)
+            setUserId(project[0].owner.id)
         }
     }
 
@@ -41,7 +41,6 @@ const ProjectView = (props) => {
     };
 
     const handleChangeUser = (event) => {
-        console.log('handle', event.target.value)
         setUserId(event.target.value);
     };
 
@@ -49,7 +48,7 @@ const ProjectView = (props) => {
         let project = new Project({
             name: name,
             description: description,
-            user: {
+            owner: {
                 id: userId
             },
         })

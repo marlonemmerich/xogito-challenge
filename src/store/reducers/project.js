@@ -17,11 +17,11 @@ export default function(state = initialProjects, action) {
             let index = state.findIndex((proj) => (
                 proj.id == action.payload.id
             ))
-            console.log('index', index)
-            if(index) {
+
+            if(index != -1) {
                 state[index] = action.payload
             }
-
+            console.log(state)
             return state
         default:
             return state;

@@ -8,13 +8,44 @@ import { TextField, Button, Container, Grid } from '@mui/material';
 const UserView = props => {
     const { users } = props
 
-    function insertUser() {
-        let user = new User({
-            id: 6,
-            name: 'User 6',
-            email: 'email@email.com'
-        });
-        props.callInsertUser(user);
+    let [name, setName] = React.useState('');
+    let [email, setEmail] = React.useState('');
+    let [isUniqueEmail, setIsUniqueEmail] = React.useState(true);
+
+    const handleChangeName = (event) => {
+        setName(event.target.value);
+    };
+
+    const handleChangeEmail = (event) => {
+        checkIsUniqueEmail(event.target.value)
+        setEmail(event.target.value);
+    };
+
+    function isFormValid() {
+        return !!isvalidEmail(email) && isUniqueEmail && !!name;
+    }
+
+    function isvalidEmail(email) {
+        var re = /\S+@\S+\.\S+/;
+        return re.test(email);
+    }
+
+    function checkIsUniqueEmail(email) {
+        let a = !props.users.some((user) => {
+            if(user.email == email) {
+                console.log('equal!!', email, user.email)
+            }
+            return user.email == email
+        })
+        setIsUniqueEmail(a);
+    }
+
+    function sendForm() {
+        let user = new User();
+        user.name = name;
+        user.email = email;
+
+        props.callInsertUser(user)
     }
 
     return (
@@ -26,6 +57,8 @@ const UserView = props => {
                         label="Name"
                         variant="outlined"
                         sx={{ my: 2 }}
+                        value={name}
+                        onChange={handleChangeName}
                         />
                         <br />
                     <TextField
@@ -33,9 +66,13 @@ const UserView = props => {
                         label="E-mail"
                         variant="outlined"
                         sx={{ pb: 2 }}
+                        value={email}
+                        onChange={handleChangeEmail}
+                        error={!isUniqueEmail}
+                        helperText={isUniqueEmail ? '' : 'Needs to be unique'}
                     />
                     <br />
-                    <Button variant="contained" color="primary" onClick={() => insertUser()}>
+                    <Button disabled={!isFormValid()} variant="contained" color="primary" onClick={() => sendForm()}>
                         Save User
                     </Button>
                 </form>

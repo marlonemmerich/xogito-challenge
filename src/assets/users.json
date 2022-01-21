@@ -2,51 +2,51 @@
     {
         "id": 1,
         "name": "Babs",
-        "Email": "blyle0@businessinsider.com"
+        "email": "blyle0@businessinsider.com"
     },
     {
         "id": 2,
         "name": "Jorey",
-        "Email": "jperrie1@uiuc.edu"
+        "email": "jperrie1@uiuc.edu"
     },
     {
         "id": 3,
         "name": "Michale",
-        "Email": "mhabercham2@hc360.com"
+        "email": "mhabercham2@hc360.com"
     },
     {
         "id": 4,
         "name": "Braden",
-        "Email": "byegorkov3@tuttocitta.it"
+        "email": "byegorkov3@tuttocitta.it"
     },
     {
         "id": 5,
         "name": "Edith",
-        "Email": "eyakuntsov4@state.gov"
+        "email": "eyakuntsov4@state.gov"
     },
     {
         "id": 6,
         "name": "Marris",
-        "Email": "mcashman5@theguardian.com"
+        "email": "mcashman5@theguardian.com"
     },
     {
         "id": 7,
         "name": "Mill",
-        "Email": "mdeadman6@nymag.com"
+        "email": "mdeadman6@nymag.com"
     },
     {
         "id": 8,
         "name": "Terrance",
-        "Email": "tmckeggie7@photobucket.com"
+        "email": "tmckeggie7@photobucket.com"
     },
     {
         "id": 9,
         "name": "Myrtice",
-        "Email": "mnuttall8@zimbio.com"
+        "email": "mnuttall8@zimbio.com"
     },
     {
         "id": 10,
         "name": "Ally",
-        "Email": "amallabund9@opensource.org"
+        "email": "amallabund9@opensource.org"
     }
 ]

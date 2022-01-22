@@ -40,9 +40,6 @@ const UserView = props => {
 
     function checkIsUniqueEmail(email) {
         let a = !props.users.some((user) => {
-            if(user.email == email) {
-                console.log('equal!!', email, user.email)
-            }
             return user.email == email
         })
         setIsUniqueEmail(a);

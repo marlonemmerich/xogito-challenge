@@ -38,7 +38,7 @@ const HomeComponent = (props) => {
 
                     <Grid item xs={2}>
                         <Link to="/user">
-                            <Button variant="contained">
+                            <Button variant="contained" data-testid="button-create-user">
                                 Create new User
                             </Button>
                         </Link>
@@ -46,7 +46,7 @@ const HomeComponent = (props) => {
 
                     <Grid item xs={3}>
                         <Link to="/project">
-                            <Button variant="contained">
+                            <Button variant="contained" data-testid="button-create-project">
                                 Create new Project
                             </Button>
                         </Link>
@@ -56,7 +56,7 @@ const HomeComponent = (props) => {
             </Container>
             <Container sx={{ pt: 10 }}>
             <TableContainer component={Paper}>
-                <Table aria-label="simple table">
+                <Table aria-label="simple table" data-testid="container-table">
                     <TableHead>
                     <TableRow>
                         <TableCell>id</TableCell>

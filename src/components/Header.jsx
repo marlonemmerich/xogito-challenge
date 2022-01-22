@@ -6,14 +6,17 @@ import { Link } from 'react-router-dom'
 
 const pages = [
     {
+        dataTestId: 'link-home-home',
         name: 'Home',
         path: '/'
     },
     {
+        dataTestId: 'link-home-project',
         name: 'Create Project',
         path: '/project'
     },
     {
+        dataTestId: 'link-home-user',
         name: 'Create User',
         path: '/user'
     },
@@ -38,7 +41,7 @@ const Header = () => {
       setAnchorElUser(null);
     };
     return (
-        <header>
+        <header data-testid="header">
             <AppBar position="static">
                 <Container maxWidth="xl">
                     <Toolbar disableGutters>
@@ -80,7 +83,7 @@ const Header = () => {
                                 }}
                                 >
                                 {pages.map((page) => (
-                                    <Link key={page.name} to={page.path} style={{ textDecoration: 'none' }}>
+                                    <Link data-testid={page.dataTestId} key={page.name} to={page.path} style={{ textDecoration: 'none' }}>
                                         <MenuItem>{page.name}</MenuItem>
                                     </Link>
   

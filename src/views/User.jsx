@@ -3,12 +3,18 @@ import User from '../models/User'
 import { connect } from 'react-redux'
 import { insertUser } from '../store/actions/user'
 import { useNavigate } from "react-router-dom";
+import SnackbarComponent from '../components/SnackBar'
+import SnackbarHOC from '../hoc/SnackbarHOC'
 
 import { TextField, Button, Container, Grid } from '@mui/material';
 
 const UserView = props => {
+    const [open, setOpen] = React.useState(false);
+
     const { users } = props
     const navigate = useNavigate();
+    const SnackbarHOCComponent = SnackbarHOC(SnackbarComponent)
+    const messageSnackBar = "User added succesfully! Redirecting...";
 
     let [name, setName] = React.useState('');
     let [email, setEmail] = React.useState('');
@@ -48,7 +54,12 @@ const UserView = props => {
         user.email = email;
 
         props.callInsertUser(user)
-        navigate('/');
+        setOpen(true);
+
+        window.setTimeout(() => {
+            setOpen(false);
+            navigate('/');
+        }, 2000)
     }
 
     return (
@@ -80,6 +91,7 @@ const UserView = props => {
                     </Button>
                 </form>
             </Grid>
+            <SnackbarHOCComponent open={open} message={messageSnackBar}/>
         </Container>
     )
 }

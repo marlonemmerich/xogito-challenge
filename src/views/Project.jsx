@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import Project from './../models/Project'
 import { insertProject, editProject } from '../store/actions/project'
 import { useParams, useNavigate } from "react-router-dom";
+import SnackbarComponent from '../components/SnackBar'
+import SnackbarHOC from '../hoc/SnackbarHOC'
 
 const ProjectView = (props) => {
     const navigate = useNavigate();
@@ -11,6 +13,10 @@ const ProjectView = (props) => {
     let [name, setName] = React.useState('');
     let [description, setDescription] = React.useState('');
     let [userId, setUserId] = React.useState(0);
+    const [open, setOpen] = React.useState(false);
+
+    const SnackbarHOCComponent = SnackbarHOC(SnackbarComponent)
+    const messageSnackBar = "Project added succesfully! Redirecting...";
 
     const { users, projects } = props
 
@@ -53,15 +59,20 @@ const ProjectView = (props) => {
                 id: userId
             },
         })
+
         if(id) {
             project.id = id;
             props.callEditProject(project)
-            return;
+        } else {
+            props.callInsertProject(project)
         }
 
-        props.callInsertProject(project)
+        setOpen(true);
 
-        navigate('/');
+        window.setTimeout(() => {
+            setOpen(false);
+            navigate('/');
+        }, 2000)
     };
 
     return (
@@ -125,6 +136,7 @@ const ProjectView = (props) => {
                     </Button>
                 </form>
             </Grid>
+            <SnackbarHOCComponent open={open} message={messageSnackBar}/>
         </Container>
     )
 }
